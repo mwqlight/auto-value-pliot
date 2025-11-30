@@ -1,0 +1,5 @@
+/usr/local/share/value-space/auto-value-pliot/price-compare-backend/src/test/java/com/pricecompare/integration/DatabaseIntegrationTest.java
+/usr/local/share/value-space/auto-value-pliot/price-compare-backend/src/test/java/com/pricecompare/PriceCompareApplicationTests.java
+/usr/local/share/value-space/auto-value-pliot/price-compare-backend/src/test/java/com/pricecompare/service/CompareServiceTest.java
+/usr/local/share/value-space/auto-value-pliot/price-compare-backend/src/test/java/com/pricecompare/controller/CrawlerControllerTest.java
+/usr/local/share/value-space/auto-value-pliot/price-compare-backend/src/test/java/com/pricecompare/service/CrawlerServiceTest.java

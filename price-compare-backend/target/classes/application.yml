@@ -1,0 +1,106 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: price-compare-backend
+  
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/price_compare?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+    
+    # SQL初始化配置
+    initialization-mode: always
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+    continue-on-error: true
+  
+  # Redis配置
+  redis:
+    host: localhost
+    port: 6379
+    password: 
+    database: 0
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 0
+    timeout: 3000ms
+  
+  # RabbitMQ配置（用于异步任务）
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+  
+  # 安全配置
+  security:
+    oauth2:
+      client:
+        registration:
+          taobao:
+            client-id: ${TAOBAO_CLIENT_ID:}
+            client-secret: ${TAOBAO_CLIENT_SECRET:}
+          jd:
+            client-id: ${JD_CLIENT_ID:}
+            client-secret: ${JD_CLIENT_SECRET:}
+          pdd:
+            client-id: ${PDD_CLIENT_ID:}
+            client-secret: ${PDD_CLIENT_SECRET:}
+
+# MyBatis-Plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# 日志配置
+logging:
+  level:
+    com.pricecompare: debug
+    org.springframework.security: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    name: logs/price-compare.log
+
+# 应用配置
+app:
+  # 比价任务配置
+  compare:
+    timeout: 300000
+    max-retries: 3
+    cache-ttl: 3600
+  
+  # 爬虫配置
+  crawler:
+    user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+    timeout: 10000
+    max-connections: 100
+  
+  # JWT配置
+  jwt:
+    secret: ${JWT_SECRET:price-compare-secret-key-2024}
+    expiration: 86400000
+    issuer: price-compare-backend
